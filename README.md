@@ -1,6 +1,6 @@
-# BuangBijak
+# Bina Bisnis
 
-A new Flutter project.
+Credit to dzaky and friends.
 
 ## Getting Started
 
@@ -15,4 +15,3 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-# fp-tekber-kel-3
