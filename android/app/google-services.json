@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "709894121389",
+    "project_id": "buang-bijak",
+    "storage_bucket": "buang-bijak.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709894121389:android:e19b14ad6f5f10c256e324",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKwUS42L0rk0cc7X8csuxuwQAe7JgGZoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709894121389:android:16e5d4f21ecbddbe56e324",
+        "android_client_info": {
+          "package_name": "com.example.fp_tekber"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKwUS42L0rk0cc7X8csuxuwQAe7JgGZoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
