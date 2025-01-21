@@ -265,16 +265,15 @@ class _DashboardState extends State<Dashboard> {
                     elevation: 0,
                     backgroundColor: Colors.transparent,
                     selectedItemColor: Colors.black,
-                    unselectedItemColor: Colors.black38,
+                    unselectedItemColor: Colors.black,
                     selectedLabelStyle: regular12,
                     unselectedLabelStyle: regular12,
                     items: [
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.home_rounded), label: 'Beranda'),
-                      // BottomNavigationBarItem(
-                      //     icon: Icon(Icons.inbox), label: 'Pickup'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.person), label: 'Profile'),
+                      BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Home'),
+                      BottomNavigationBarItem(icon: Icon(Icons.business), label: 'UMKM'),
+                      BottomNavigationBarItem(icon: Icon(Icons.article), label: 'News'),
+                      BottomNavigationBarItem(icon: Icon(Icons.pie_chart), label: 'Portfolio'),
+                      BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
                     ],
                     onTap: (index) {
                       String routeName;
@@ -282,10 +281,16 @@ class _DashboardState extends State<Dashboard> {
                         case 0:
                           routeName = '/';
                           break;
-                        // case 1:
-                        //   routeName = '/ajukan-pickup';
-                        //   break;
                         case 1:
+                          routeName = '/';
+                          break;
+                        case 2:
+                          routeName = '/';
+                          break;
+                        case 3:
+                          routeName = '/';
+                          break;
+                        case 4:
                           routeName = '/profil-saya';
                           break;
                         default:

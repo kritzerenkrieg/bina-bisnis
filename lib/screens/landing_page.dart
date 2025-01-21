@@ -49,31 +49,14 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Padding(
-              padding: EdgeInsets.zero,
-              child: Image.asset(
-                'assets/images/gambarlanding.png',
-                width: 344,
-                height: 522,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
           Padding(
-            padding: const EdgeInsets.only(top: 240),
+            padding: const EdgeInsets.only(top: 120),
             child: Align(
               alignment: Alignment.topCenter,
               child: Column(
                 children: [
-                  Image.asset('assets/images/logonama.png', height: 45),
+                  Image.asset('assets/images/logonama.png', height: 480),
                   const SizedBox(height: 20),
-                  Text(
-                    'Bijak Kelola Barang dan Sampah',
-                    style: bold16.copyWith(color: grey2),
-                    textAlign: TextAlign.center,
-                  ),
                 ],
               ),
             ),
@@ -134,18 +117,12 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const SizedBox(height: 50),
+                      //const SizedBox(height: 50),
                       Padding(
-                        padding: const EdgeInsets.only(top: 160, bottom: 24),
-                        child: Image.asset('assets/images/logonama.png',
-                            height: 60),
+                        padding: const EdgeInsets.only(top: 0, bottom: 0),
+                        child: Image.asset('assets/images/logonama.png', height: 320),
                       ),
-                      Text(
-                        'Bijak Kelola Barang dan Sampah',
-                        style: bold14.copyWith(color: grey2),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 64),
+                      //const SizedBox(height: 64),
                       TextField(
                         controller: usernameController,
                         decoration: InputDecoration(
@@ -216,7 +193,7 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(height: 32),
                       Button(
                         text: 'Masuk',
-                        color: green,
+                        color: blue,
                         textColor: black,
                         onPressed: () async {
                           final email = usernameController.text.trim();
@@ -381,17 +358,12 @@ class RegistrationScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 160, bottom: 24),
-                    child:
-                        Image.asset('assets/images/logonama.png', height: 60),
-                  ),
                   Text(
-                    'Bijak Kelola Barang dan Sampah',
-                    style: bold14.copyWith(color: grey2),
+                    'Daftar akun Bina Bisnis baru',
+                    style: bold20.copyWith(color: grey2),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 64),
+                  const SizedBox(height: 32),
                   TextField(
                     controller: usernameController,
                     decoration: InputDecoration(
@@ -603,7 +575,7 @@ class RegistrationScreen extends StatelessWidget {
                         }
                       }
                     },
-                    color: green,
+                    color: blue,
                     textColor: black,
                     text: 'Daftar',
                   ),
