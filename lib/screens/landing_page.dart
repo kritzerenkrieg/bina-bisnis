@@ -480,7 +480,7 @@ class RegistrationScreen extends StatelessWidget {
                   TextField(
                     controller: addressController,
                     decoration: InputDecoration(
-                      labelText: 'Alamat',
+                      labelText: 'Nomor Telepon',
                       labelStyle: regular14,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),

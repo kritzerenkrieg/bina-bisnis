@@ -1,17 +1,14 @@
-// ignore_for_file: deprecated_member_use, use_build_context_synchronously
-
 import 'package:buang_bijak/screens/dashboard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:buang_bijak/widgets/home_app_bar.dart';
-import 'package:flutter/material.dart';
-import '../widgets/navigation_buttons.dart';
-import '../widgets/jadwal_card.dart';
-import '../theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:buang_bijak/widgets/history_card.dart';
-import 'package:buang_bijak/utils/date_helper.dart';
 import 'package:logger/logger.dart';
+import '../theme.dart';
+import '../widgets/jadwal_card.dart';
+import '../widgets/home_app_bar.dart';
+import '../widgets/history_card.dart';
+import '../utils/date_helper.dart';
 
 final Logger logger = Logger();
 
@@ -48,12 +45,10 @@ class UserScreen extends StatelessWidget {
         );
       }
 
-      List<Map<String, dynamic>> pickups = querySnapshots
+      return querySnapshots
           .expand((snapshot) =>
               snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>))
           .toList();
-
-      return pickups;
     } catch (e) {
       logger.e('Error fetching pickups', error: e);
       return [];
@@ -74,7 +69,7 @@ class UserScreen extends StatelessWidget {
         if (isAdmin) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Dashboard()),
+            MaterialPageRoute(builder: (context) => const Dashboard()),
           );
         } else {
           Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -90,156 +85,190 @@ class UserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-      WillPopScope(
+    return WillPopScope(
       onWillPop: () async => _onWillPop(context),
       child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(200),
-          child: HomeAppBar(),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: const Text(
+            'Hai, Bibi!',
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.notifications, color: Colors.black),
+              onPressed: () {},
+            ),
+          ],
         ),
         body: Stack(
           children: [
             SingleChildScrollView(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 8),
-
-                  const NavigationButtons(),
-
-                  const SizedBox(height: 28),
-
-                  Row(
-                    children: [
-                      Image.asset('assets/icons/calendar.png',
-                          width: 20, height: 20),
-                      const SizedBox(width: 12),
-                      Text('Jadwal Angkut Sampah Anda', style: bold16),
-                    ],
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  // Jadwal Pickup Dinamis
-                  FutureBuilder<List<Map<String, dynamic>>>(
-                    future: _getUserPickups(status1: 'Pending'),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      if (snapshot.hasError) {
-                        return const Center(
-                            child: Text('Error fetching Jadwal'));
-                      }
-
-                      List<Map<String, dynamic>> pickups = snapshot.data ?? [];
-
-                      if (pickups.isEmpty) {
-                        return Container(
-                          width: double.infinity,
-                          height: 80,
-                          alignment: Alignment.center,
-                          child: const Text('Data kosong',
-                              textAlign: TextAlign.center),
-                        );
-                      }
-
-                      return Column(
-                        children: pickups.map((pickup) {
-                          return Column(
-                            children: [
-                              JadwalCard(
-                                time: pickup['waktu_pickup'],
-                                date: formatPickupDate(
-                                    (pickup['tanggal_pickup'] as Timestamp)
-                                        .toDate()),
-                                wasteType: pickup['jenis_sampah'],
-                                address: pickup['lokasi_pickup'],
-                                status: pickup['status'],
-                                orderId: pickup['order_id'],
-                                isRevised: pickup['isRevised'],
-                                rejectedReason: pickup['rejectedReason'],
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Total asetmu',
+                      style: TextStyle(color: Colors.grey, fontSize: 16),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      'Rp 0',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      'Total profit Rp 0 (▲ 0%)',
+                      style: TextStyle(color: Colors.green),
+                    ),
+                    const SizedBox(height: 16),
+                    Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            const Text(
+                              'Saldo Aktif',
+                              style: TextStyle(color: Colors.grey, fontSize: 16),
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'Rp 0',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
                               ),
-                              const SizedBox(height: 8),
-                            ],
-                          );
-                        }).toList(),
-                      );
-                    },
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  const ImageBanner(),
-
-                  const SizedBox(height: 20),
-
-                  Row(
-                    children: [
-                      Image.asset('assets/icons/clock.png',
-                          width: 20, height: 20),
-                      const SizedBox(width: 12),
-                      Text('Histori Pickup', style: bold16),
-                    ],
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  // History Pickup Dinamis
-                  FutureBuilder<List<Map<String, dynamic>>>(
-                    future:
-                        _getUserPickups(status1: 'Success', status2: 'Cancel'),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      }
-                      if (snapshot.hasError) {
-                        return Text('Error fetching History');
-                      }
-
-                      List pickups = snapshot.data ?? [];
-
-                      if (pickups.isEmpty) {
-                        return Container(
-                          width: double.infinity,
-                          height: 80,
-                          alignment: Alignment.center,
-                          child:
-                              Text('Data kosong', textAlign: TextAlign.center),
-                        );
-                      }
-
-                      return Column(
-                        children: pickups.map((pickup) {
-                          return Column(
-                            children: [
-                              HistoryCard(
-                                time: pickup['waktu_pickup'],
-                                date: formatPickupDate(
-                                    pickup['tanggal_pickup'].toDate()),
-                                wasteType: pickup['jenis_sampah'],
-                                address: pickup['lokasi_pickup'],
-                                status: pickup['status'],
-                                orderId: pickup['order_id'],
-                                isRevised: pickup['isRevised'],
-                                rejectedReason: pickup['rejectedReason'],
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  child: const Text('Topup'),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.orange,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  child: const Text('Tarik'),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.orange,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Rekomendasi Mitra UMKM Untukmu!',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'PT. Karya Ber',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
                               ),
-                              const SizedBox(height: 8),
-                            ],
-                          );
-                        }).toList(),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 80),
-                ],
+                            ),
+                            const SizedBox(height: 4),
+                            const Text('Modal Pengolahan Tahu Kuning'),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Chip(
+                                  label: const Text('Crowdfunding'),
+                                  backgroundColor: Colors.yellow,
+                                ),
+                                const SizedBox(width: 8),
+                                Row(
+                                  children: const [
+                                    Icon(Icons.star, color: Colors.orange),
+                                    Text('4.5/5'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text('Plafond'),
+                                    Text(
+                                      'Rp 7.000.000',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text('Bagi Hasil'),
+                                    Text(
+                                      '17%',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: () {},
+                              child: const Text('Ayo Modalin!'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-
-            // Floating Navigation Bar
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -263,7 +292,7 @@ class UserScreen extends StatelessWidget {
                   unselectedItemColor: Colors.black38,
                   selectedLabelStyle: regular12,
                   unselectedLabelStyle: regular12,
-                  items: [
+                  items: const [
                     BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Home'),
                     BottomNavigationBarItem(icon: Icon(Icons.business), label: 'UMKM'),
                     BottomNavigationBarItem(icon: Icon(Icons.article), label: 'News'),
@@ -274,15 +303,6 @@ class UserScreen extends StatelessWidget {
                     String routeName;
                     switch (index) {
                       case 0:
-                        routeName = '/';
-                        break;
-                      case 1:
-                        routeName = '/';
-                        break;
-                      case 2:
-                        routeName = '/';
-                        break;
-                      case 3:
                         routeName = '/';
                         break;
                       case 4:
@@ -298,53 +318,6 @@ class UserScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ImageBanner extends StatelessWidget {
-  const ImageBanner({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: green,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Track dan Kelola\nSampah Mu!', style: bold16),
-                  SizedBox(height: 8),
-                  Text('Lacak Sampah dan Dukung\nLingkungan Lebih Bersih.',
-                      style: regular14),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(12),
-                bottomRight: Radius.circular(12),
-              ),
-              child: Image.asset(
-                'assets/images/girl_with_green_shirt.png',
-                height: 180,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
