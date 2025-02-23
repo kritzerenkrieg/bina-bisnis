@@ -269,54 +269,42 @@ class UserScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: const EdgeInsets.all(16),
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: BottomNavigationBar(
-                  elevation: 0,
-                  backgroundColor: Colors.transparent,
-                  selectedItemColor: Colors.black,
-                  unselectedItemColor: Colors.black38,
-                  selectedLabelStyle: regular12,
-                  unselectedLabelStyle: regular12,
-                  items: const [
-                    BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Home'),
-                    BottomNavigationBarItem(icon: Icon(Icons.business), label: 'UMKM'),
-                    BottomNavigationBarItem(icon: Icon(Icons.article), label: 'News'),
-                    BottomNavigationBarItem(icon: Icon(Icons.pie_chart), label: 'Portfolio'),
-                    BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
-                  ],
-                  onTap: (index) {
-                    String routeName;
-                    switch (index) {
-                      case 0:
-                        routeName = '/';
-                        break;
-                      case 4:
-                        routeName = '/profil-saya';
-                        break;
-                      default:
-                        routeName = '/';
-                    }
-                    Navigator.pushReplacementNamed(context, routeName);
-                  },
-                ),
-              ),
-            ),
           ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.black38,
+          currentIndex: 0,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.business), label: 'UMKM'),
+            BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Blog'),
+            BottomNavigationBarItem(icon: Icon(Icons.pie_chart), label: 'Portfolio'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
+          ],
+          onTap: (index) {
+            String routeName;
+            switch (index) {
+              case 0:
+                routeName = '/';
+                break;
+              case 1:
+                routeName = '/umkm';
+                break;
+              case 2:
+                routeName = '/blog';
+                break;
+              case 3:
+                routeName = '/portfolio';
+                break;
+              case 4:
+                routeName = '/profil-saya';
+                break;
+              default:
+                routeName = '/';
+            }
+            Navigator.pushReplacementNamed(context, routeName);
+          },
         ),
       ),
     );

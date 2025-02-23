@@ -9,12 +9,18 @@ import 'package:buang_bijak/screens/history_pickup.dart';
 import 'package:buang_bijak/screens/dashboard.dart';
 import 'package:buang_bijak/screens/dashboard_detail.dart';
 import 'package:buang_bijak/screens/not_found.dart';
+import 'package:buang_bijak/screens/umkm_screen.dart';
+import 'package:buang_bijak/screens/portofolio_screen.dart';
+import 'package:buang_bijak/screens/blog_screen.dart';
 
 final Map<String, WidgetBuilder> appRoutes = {
   '/': (context) => const HomeScreen(
         isAdmin: false,
       ),
   '/ajukan-pickup': (context) => const PickupPage(),
+  '/umkm': (context) => const UMKMScreen(),
+  '/portfolio': (context) => PortofolioScreen(),
+  '/blog': (context) => const BlogScreen(),
   '/profil-saya': (context) => const UserSettings(),
   '/login': (context) => const LoginSignup(),
   '/landing-pickup': (context) => LandingPickup(),

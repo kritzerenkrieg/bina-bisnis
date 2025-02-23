@@ -41,6 +41,7 @@ dependencies:
   logger: ^2.5.0
   uuid: ^4.5.1
   intl: ^0.20.1
+  rename: ^3.0.2
 
 dev_dependencies:
   flutter_test:
@@ -58,7 +59,7 @@ flutter_icons:
   android: true
   ios: true
   web: true
-  image_path: "assets/icon/icon.png"
+  image_path: "assets/icon/icon2.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

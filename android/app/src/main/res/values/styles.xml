@@ -16,5 +16,5 @@
         <item name="android:windowBackground">?android:colorBackground</item>
     </style>
 
-     <string name="app_name">BuangBijak</string>
+     <string name="app_name">BinaBisnis</string>
 </resources>
